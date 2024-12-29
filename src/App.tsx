@@ -12,10 +12,10 @@ const App = () => {
 
   // Fetch MARKDOWN.md dynamically
   useEffect(() => {
-    fetch("/MARKDOWN.md")
+    fetch("/src/assets/MARKDOWN.md")
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`Failed to load MARKDOWN.md: ${response.statusText}`);
+          throw new Error(`Failed to load MARKDOWN.md ${response.statusText}`);
         }
         return response.text();
       })
