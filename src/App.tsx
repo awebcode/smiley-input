@@ -48,7 +48,7 @@ const App = () => {
       </div>
 
       {/* Render Markdown Section */}
-      <div className="mt-8 bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
+     <div className="mt-8 bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
         <h2 className="text-xl font-bold mb-4 text-center text-green-500">
         Install Smiley-Input
         </h2>
@@ -59,7 +59,7 @@ const App = () => {
           >
             {markdownContent || "Loading README.md..."}
           </Markdown>
-        </div>
+        </div> 
       </div>
     </div>
   );
