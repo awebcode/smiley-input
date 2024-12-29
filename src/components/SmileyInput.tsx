@@ -3,7 +3,6 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import type EmojiPickerProps from "../types";
-
 /**
  * SmileyInput component props interface
  */
@@ -24,6 +23,8 @@ export interface SmileyInputProps extends React.InputHTMLAttributes<HTMLTextArea
 
 /**
  * SmileyInput component
+ * @component for Emoji Supported Input React with TailwindCSS
+ * @name SmileyInput
  */
 export function SmileyInput({
   value = "",
@@ -37,10 +38,13 @@ export function SmileyInput({
 }: SmileyInputProps) {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [open, setOpen] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState<number | null>(null);
 
+  // Handle input change
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setValue(e.target.value);
+      setCursorPosition(e.target.selectionStart || null); // Save current cursor position
       if (!keepOpened) {
         setOpen(false);
       }
@@ -48,22 +52,26 @@ export function SmileyInput({
     [setValue, keepOpened]
   );
 
+  // Handle emoji click
   const handleEmojiClick = useCallback(
     (emojiData: { emoji: string } | { native: string }) => {
       const emoji = "emoji" in emojiData ? emojiData.emoji : emojiData.native;
-      const cursorPosition = inputRef.current?.selectionStart || 0;
-      const textBeforeCursor = value.substring(0, cursorPosition);
-      const textAfterCursor = value.substring(cursorPosition);
 
+      // Determine current cursor position
+      const position = cursorPosition ?? value.length; // Use saved cursor position or append to end
+      const textBeforeCursor = value.substring(0, position);
+      const textAfterCursor = value.substring(position);
       const newValue = textBeforeCursor + emoji + textAfterCursor;
+
       setValue(newValue);
 
+      // Restore focus and update cursor position
       setTimeout(() => {
         if (inputRef.current) {
-          const newCursorPosition = cursorPosition + emoji.length;
-          inputRef.current.selectionStart = newCursorPosition;
-          inputRef.current.selectionEnd = newCursorPosition;
           inputRef.current.focus();
+          const newCursorPosition = position + emoji.length;
+          inputRef.current.setSelectionRange(newCursorPosition, newCursorPosition);
+          setCursorPosition(newCursorPosition); // Update saved cursor position
         }
       }, 0);
 
@@ -71,7 +79,7 @@ export function SmileyInput({
         setOpen(false);
       }
     },
-    [setValue, value, keepOpened]
+    [cursorPosition, setValue, value, keepOpened]
   );
 
   return (
@@ -79,28 +87,35 @@ export function SmileyInput({
       <textarea
         value={value}
         onChange={handleInputChange}
+        onClick={() => {
+          if (inputRef.current) {
+            setCursorPosition(inputRef.current.selectionStart); // Update cursor position on click
+          }
+        }}
         ref={inputRef}
-        className={`resize-none    flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", ${className}`}
+        className={`resize-none flex w-full rounded-md border-2 border-emerald-500 ring-1 ring-offset-1  border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${className}`}
         rows={2}
         placeholder="Write your thoughts here..."
         {...props}
       />
       <DropdownMenu.Root open={open} onOpenChange={setOpen}>
-        <DropdownMenu.Trigger
-          asChild
-          className="border-none outline-none h-8 w-8 bg-blue-500/60 hover:bg-blue-500 rounded-full"
-        >
+        <DropdownMenu.Trigger asChild className="border-none outline-none h-8 w-8 bg-gray-300/60 rounded-full">
           <button
-            className={`absolute bottom-1 right-2 h-full w-full text-lg ${emojiButtonClassName}`}
-          
+            className={`absolute bottom-2 right-2 h-8 w-8 text-lg ${emojiButtonClassName}`}
+            // onKeyDown={(e) => {
+            //   if (e.key === "Enter" || e.key === " ") {
+            //     e.preventDefault();
+            //     setOpen((prevOpen) => !prevOpen);
+            //   }
+            // }}
           >
             {emojiButtonElement}
           </button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
           <DropdownMenu.Content
-            sideOffset={18}
-            align="start"
+            sideOffset={15}
+            align="end"
             side="top"
           >
             <Picker
