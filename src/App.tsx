@@ -12,7 +12,7 @@ const App = () => {
 
   // Fetch MARKDOWN.md dynamically
   useEffect(() => {
-    fetch("/src/assets/MARKDOWN.md")
+    fetch("https://raw.githubusercontent.com/awebcode/smiley-input/master/src/assets/MARKDOWN.md")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Failed to load MARKDOWN.md ${response.statusText}`);

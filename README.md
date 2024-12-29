@@ -1,6 +1,6 @@
 
 
-# smiley-input 😄😎✅😡
+# smiley-input 😄😎✅👀
 
 `smiley-input` is a React component that enables users to input text and emojis effortlessly. This component is ideal for chat applications, social media platforms, and any interactive applications where emoji input is required.
 
@@ -10,7 +10,7 @@ Check out the live demo [here](https://vercel.app/smiley-input).
 
 Watch the video demo on [YouTube](https://youtube.com/demo-video).
 
-![Screenshot](https://example.com/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/awebcode/smiley-input/master/src/assets/smiley-input)
 
 ## Features
 
