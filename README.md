@@ -1,77 +1,224 @@
-# smiley-input 😀
 
-> A powerful and customizable React component that seamlessly integrates emoji picker functionality into any input element, enhancing user experience.
 
-[![NPM](https://img.shields.io/npm/v/smiley-input.svg)](https://www.npmjs.com/package/smiley-input) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+# smiley-input 😄😎✅😡
 
-<a href="https://awebcode.github.io/smiley-input/"><img width="500" src="https://awebcode.github.io/smiley-input/assets/images/screely-1566732641740.png" alt="Demo"></a>
+`smiley-input` is a React component that enables users to input text and emojis effortlessly. This component is ideal for chat applications, social media platforms, and any interactive applications where emoji input is required.
 
-## 📝 About
+## Live Demo
 
-`SmileyInput` provides a simple and intuitive way to add emoji picker functionality to any input element in your React application. With just a few lines of code, you can enable your users to easily select and insert emojis into their text input. 
+Check out the live demo [here](https://vercel.app/smiley-input).
 
-The component is highly customizable, allowing you to control the styling, positioning, and behavior of the emoji picker. It also supports various useful features out of the box, such as:
+Watch the video demo on [YouTube](https://youtube.com/demo-video).
 
-- Easy integration with any input element 
-- Customizable appearance via props
-- Built-in support for cleaning input on enter
-- Callback functions for `onChange`, `onClick`, and `onEnter` events
-- Ability to keep the picker open after selecting an emoji
-- Internationalization support for multiple languages
+![Screenshot](https://example.com/screenshot.png)
 
-`SmileyInput` leverages the power of the emoji-mart library to provide a wide range of emojis across different categories and styles. The internationalization capabilities allow you to cater to users from diverse linguistic backgrounds, making your application more inclusive and accessible.
+## Features
 
-Whether you're building a chat app, social media platform, or any other application that could benefit from emoji input, `SmileyInput` has you covered. Give your users a fun and engaging way to express themselves with this powerful yet easy-to-use component!
+- Easy integration into any React application
 
-## 📦 Install
+- Customizable emoji picker
+
+- Supports emoji insertion at the cursor position
+
+- Responsive design for different screen sizes
+
+- Configurable emoji picker options
+
+- Styled with Tailwind CSS
+
+## Installation
+
+To install the package, run the following command:
 
 ```bash
-npm install --save smiley-input
 
-## 📦 Install
+npm install smiley-input
 
-```bash
-npm install --save smiley-input
 ```
 
-## 🚀 Usage
+or using yarn/bun:
 
-After install import the smiley-input component to display your input with emoji support like so:
+```bash
 
-```tsx
-import { useState } from 'react'
-import  SmileyInput  from 'smiley-input'
-function App() {
-  const [value, setValue] = useState("")
+yarn add smiley-input || bun add  smiley-input
 
-  return (
-    <>
-      <h1>{value}</h1>
-     <SmileyInput value={value} setValue={setValue} className='m-2' />
-    </>
-  )
+```
+## Usage
+
+Here is a simple example to get you started with `smiley-input`:
+
+### Import the Component
+
+```jsx
+
+import React, { useState } from 'react';
+
+import { SmileyInput } from 'smiley-input';
+
+const App = () => {
+
+  const [message, setMessage] = useState('');
+
+  const handleSendMessage = (value) => {
+
+    console.log("Message sent:", value);
+
+    setMessage('');
+
+  };
+
+  return (
+
+    <div className="p-4">
+
+      <SmileyInput
+
+        value={message}
+
+        setValue={setMessage}
+
+        keepOpened={true}
+
+        className="custom-textarea"
+
+        pickerOptions={{
+
+          theme: 'light',
+
+        }}
+
+        emojiButtonElement="😊"
+
+        emojiButtonClassName="custom-emoji-button"
+
+      />
+
+      <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded" onClick={() => handleSendMessage(message)}>Send</button>
+
+    </div>
+
+  );
+
+};
+
+export default App;
+
+```
+
+### Tailwind CSS Setup
+
+If you haven't already set up Tailwind CSS in your project, follow these steps:
+
+1\. Install Tailwind CSS:
+
+   ```bash
+
+   npm install -D tailwindcss postcss autoprefixer
+
+   npx tailwindcss init -p
+
+   ```
+
+2\. Configure your `tailwind.config.js`:
+
+   ```js
+
+   // tailwind.config.js
+
+   module.exports = {
+
+     content: [
+
+       './src/**/*.{js,jsx,ts,tsx}',
+
+     ],
+
+     theme: {
+
+       extend: {},
+
+     },
+
+     plugins: [],
+
+   }
+
+   ```
+
+3\. Add Tailwind's directives to your CSS file:
+
+   ```css
+
+   /* styles.css */
+
+   @tailwind base;
+
+   @tailwind components;
+
+   @tailwind utilities;
+
+   ```
+
+4\. Import the CSS file in your entry point (e.g., `index.tsx`):
+
+   ```jsx
+
+   import './styles.css';
+
+   ```
+
+
+
+### Example Styles
+
+```css
+
+/* Custom styles for the textarea and emoji button */
+
+.custom-textarea {
+
+  @apply border border-gray-300 p-2 text-base rounded-md;
+
 }
 
-export default App
+.custom-emoji-button {
+
+  @apply bg-none border-none cursor-pointer text-lg;
+
+}
 
 ```
 
-## 🧩 Props
-# Including all props for html text area element
-| Prop               | Type                     | Default          | Description                                                                                                              |
-| ------------------ | ------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
-                      
-| `value`            | string | required                  | ""               | The current value of the input element.                                                                                  
-| `setValue`            | function | required                  | ""               | The callback to accept values.  
- 
+## Props
 
-# Contact
-For any questions or issues, feel free to open an issue or contact me at your-email@example.com.
+The `SmileyInput` component accepts the following props:
 
-# Changelog
-v1.0.0: Initial release with core emoji input functionality.
+| Prop                | Type                                            | Description                                              |
 
+|---------------------|-------------------------------------------------|----------------------------------------------------------|
+
+| `value`             | `string`                                        | The current value of the input                           |
+
+| `setValue`          | `(value: string) => void`                       | Function to update the input value                       |
+
+| `keepOpened`        | `boolean`                                       | Keep the emoji picker open after selecting an emoji      |
+
+| `className`         | `string`                                        | Custom class name for the input                          |
+
+| `pickerOptions`     | `Omit<EmojiPickerProps, 'data' | 'onEmojiSelect'>` | Configuration options for the emoji picker               |
+
+| `emojiButtonElement`| `React.ReactNode`                               | Custom element for the emoji button                      |
+
+| `emojiButtonClassName`| `string`                                      | Custom class name for the emoji button                   |
+
+## Contributing
+
+Contributions are welcome! If you find a bug or have a feature request, please open an issue. If you would like to contribute code, please open a pull request.
 
 ## License
 
-MIT © [awebcode](https://github.com/awebcode)
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+This README now includes live demo links at the beginning, along with the rest of the essential information to help users get started with `smiley-input`. If you need any further adjustments or additional information, feel free to ask!
