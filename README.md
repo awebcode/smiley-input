@@ -57,9 +57,7 @@ const App = () => {
   const [message, setMessage] = useState("");
 
   const handleSendMessage = (value) => {
-    //Call Api
-    console.log("Message sent:", value);
-
+    console.log("Message sent:", value);  # Api Call
     setMessage("");
   };
 
