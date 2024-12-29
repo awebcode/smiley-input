@@ -4,7 +4,7 @@
 
 ## Live Demo
 
-Check out the live demo [here](https://smiley-input.vercel.app/).
+Check out the  [Live Demo here](https://smiley-input.vercel.app/).
 
 Watch the video demo on [YouTube](https://youtube.com/demo-video).
 
