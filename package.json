@@ -31,9 +31,9 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode production",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview": "vite preview --mode production",
     "prepare": "npm run build",
     "prepublishOnly": "npm version patch --no-git-tag-version"
   },
@@ -76,5 +76,6 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "type": "module"
+  "type": "module",
+  "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead"
 }

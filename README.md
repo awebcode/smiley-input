@@ -1,16 +1,14 @@
-
-
 # smiley-input 😄😎✅👀
 
 `smiley-input` is a React component that enables users to input text and emojis effortlessly. This component is ideal for chat applications, social media platforms, and any interactive applications where emoji input is required.
 
 ## Live Demo
 
-Check out the live demo [here](https://vercel.app/smiley-input).
+Check out the live demo [here](https://smiley-input.vercel.app/).
 
 Watch the video demo on [YouTube](https://youtube.com/demo-video).
 
-![Screenshot](https://raw.githubusercontent.com/awebcode/smiley-input/master/src/assets/smiley-input)
+![Screenshot](https://raw.githubusercontent.com/awebcode/smiley-input/master/src/assets/smiley-input.png)
 
 ## Features
 
@@ -43,6 +41,7 @@ or using yarn/bun:
 yarn add smiley-input || bun add  smiley-input
 
 ```
+
 ## Usage
 
 Here is a simple example to get you started with `smiley-input`:
@@ -50,59 +49,45 @@ Here is a simple example to get you started with `smiley-input`:
 ### Import the Component
 
 ```jsx
+import React, { useState } from "react";
 
-import React, { useState } from 'react';
-
-import { SmileyInput } from 'smiley-input';
+import { SmileyInput } from "smiley-input";
 
 const App = () => {
+  const [message, setMessage] = useState("");
 
-  const [message, setMessage] = useState('');
+  const handleSendMessage = (value) => {
+    //Call Api
+    console.log("Message sent:", value);
 
-  const handleSendMessage = (value) => {
+    setMessage("");
+  };
 
-    console.log("Message sent:", value);
-
-    setMessage('');
-
-  };
-
-  return (
-
-    <div className="p-4">
-
-      <SmileyInput
-
-        value={message}
-
-        setValue={setMessage}
-
-        keepOpened={true}
-
-        className="custom-textarea"
-
-        pickerOptions={{
-
-          theme: 'light',
-
-        }}
-
-        emojiButtonElement="😊"
-
-        emojiButtonClassName="custom-emoji-button"
-
-      />
-
-      <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded" onClick={() => handleSendMessage(message)}>Send</button>
-
-    </div>
-
-  );
-
+  return (
+    <div className="p-4">
+           {" "}
+      <SmileyInput
+        value={message}
+        setValue={setMessage}
+        keepOpened={true}
+        className="custom-textarea"
+        pickerOptions={{
+          theme: "light",
+        }}
+        emojiButtonElement="😊"
+        emojiButtonClassName="custom-emoji-button h-8 w-8"
+      />
+            <button
+        className="mt-2 px-4 py-2 bg-violet-500 text-white rounded"
+        onClick={() => handleSendMessage(message)}
+      >
+        Send
+      </button>   {" "}
+    </div>
+  );
 };
 
 export default App;
-
 ```
 
 ### Tailwind CSS Setup
@@ -111,63 +96,61 @@ If you haven't already set up Tailwind CSS in your project, follow these steps:
 
 1\. Install Tailwind CSS:
 
-   ```bash
+```bash
 
-   npm install -D tailwindcss postcss autoprefixer
+npm install -D tailwindcss postcss autoprefixer
 
-   npx tailwindcss init -p
+npx tailwindcss init -p
 
-   ```
+```
 
 2\. Configure your `tailwind.config.js`:
 
-   ```js
+```js
 
-   // tailwind.config.js
+// tailwind.config.js
 
-   module.exports = {
+module.exports = {
 
-     content: [
+content: [
 
-       './src/**/*.{js,jsx,ts,tsx}',
+'./src/\*_/_.{js,jsx,ts,tsx}',
 
-     ],
+],
 
-     theme: {
+theme: {
 
-       extend: {},
+extend: {},
 
-     },
+},
 
-     plugins: [],
+plugins: [],
 
-   }
+}
 
-   ```
+```
 
 3\. Add Tailwind's directives to your CSS file:
 
-   ```css
+```css
 
-   /* styles.css */
+/_ styles.css _/
 
-   @tailwind base;
+@tailwind base;
 
-   @tailwind components;
+@tailwind components;
 
-   @tailwind utilities;
+@tailwind utilities;
 
-   ```
+```
 
 4\. Import the CSS file in your entry point (e.g., `index.tsx`):
 
-   ```jsx
+```jsx
 
-   import './styles.css';
+import './styles.css';
 
-   ```
-
-
+```
 
 ### Example Styles
 

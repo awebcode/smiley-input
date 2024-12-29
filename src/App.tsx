@@ -27,11 +27,14 @@ const App = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       {/* Smiley Input Section */}
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-xl w-full">
-        <h1 className="text-2xl font-bold mb-4 text-center text-blue-500">
-          Smiley-Input Demo
+        <h1 className="text-lg font-bold mb-4 text-center text-violet-500">
+          Smiley-Input Demo - Fully Customizable React Component
         </h1>
         <p className="mb-6 text-center text-gray-600">
           Type your message below and add emojis with the smiley button!
+        </p>
+        <p className="my-4  text-gray-700">
+          <strong>Message:</strong> {value || "Type something..."}
         </p>
         <SmileyInput
           value={value}
@@ -42,24 +45,20 @@ const App = () => {
           emojiButtonElement="😊"
           emojiButtonClassName="custom-emoji-button"
         />
-        <p className="mt-4 text-center text-gray-700">
-          <strong>Message:</strong> {value || "Type something..."}
-        </p>
+
+        <p className="mt-4 text-center text-gray-700">Give it a try!🤟 <a className="text-violet-500 hover:underline" href="https://youtube.com/@awebcode">Youtube</a></p>
       </div>
 
       {/* Render Markdown Section */}
-     <div className="mt-8 bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
+      <div className="mt-8 bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
         <h2 className="text-xl font-bold mb-4 text-center text-green-500">
-        Install Smiley-Input
+          Install Smiley-Input
         </h2>
         <div className="prose prose-blue mx-auto">
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[ rehypeHighlight]}
-          >
+          <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
             {markdownContent || "Loading README.md..."}
           </Markdown>
-        </div> 
+        </div>
       </div>
     </div>
   );
