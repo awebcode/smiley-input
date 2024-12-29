@@ -28,7 +28,7 @@ const App = () => {
       {/* Smiley Input Section */}
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-xl w-full">
         <h1 className="text-lg font-bold mb-4 text-center text-violet-500">
-          Smiley-Input Demo - Fully Customizable React Component
+          Smiley-Input - Fully Customizable React Component
         </h1>
         <p className="mb-6 text-center text-gray-600">
           Type your message below and add emojis with the smiley button!
