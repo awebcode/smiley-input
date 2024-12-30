@@ -8,19 +8,23 @@ import "./styles.css"; // Add custom CSS if needed
 
 const App = () => {
   const [value, setValue] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const [markdownContent, setMarkdownContent] = useState("");
 
   // Fetch MARKDOWN.md dynamically
   useEffect(() => {
+    setLoading(true);
     fetch("https://raw.githubusercontent.com/awebcode/smiley-input/master/src/assets/MARKDOWN.md")
       .then((response) => {
         if (!response.ok) {
+          setLoading(false);
           throw new Error(`Failed to load MARKDOWN.md ${response.statusText}`);
         }
+        setLoading(false);
         return response.text();
       })
       .then(setMarkdownContent)
-      .catch((error) => console.error(error));
+      .catch((error) => {console.error(error); setLoading(false);});
   }, []);
 
   return (
@@ -46,7 +50,15 @@ const App = () => {
           emojiButtonClassName="custom-emoji-button"
         />
 
-        <p className="mt-4 text-center text-gray-700">Give it a try!🤟 <a className="text-violet-500 hover:underline" href="https://youtube.com/@awebcode">Youtube</a></p>
+        <p className="mt-4 text-center text-gray-700">
+          Give it a try!🤟{" "}
+          <a
+            className="text-violet-500 hover:underline"
+            href="https://youtube.com/@awebcode"
+          >
+            Youtube
+          </a>
+        </p>
       </div>
 
       {/* Render Markdown Section */}
@@ -54,11 +66,15 @@ const App = () => {
         <h2 className="text-xl font-bold mb-4 text-center text-green-500">
           Install Smiley-Input
         </h2>
-        <div className="prose prose-blue mx-auto">
-          <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
-            {markdownContent || "Loading README.md..."}
-          </Markdown>
-        </div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="prose prose-blue mx-auto">
+            <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
+              {markdownContent || "Loading README.md..."}
+            </Markdown>
+          </div>
+        )}
       </div>
     </div>
   );

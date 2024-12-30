@@ -6,7 +6,7 @@
 
 Check out the  [Live Demo here](https://smiley-input.vercel.app/).
 
-Watch the video demo on [YouTube](https://youtube.com/demo-video).
+Watch the video demo on [YouTube](https://youtu.be/PTPCZTBhw9Y).
 
 ![Screenshot](https://raw.githubusercontent.com/awebcode/smiley-input/master/src/assets/smiley-input.png)
 
