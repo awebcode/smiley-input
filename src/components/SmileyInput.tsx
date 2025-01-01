@@ -109,11 +109,16 @@ export const SmileyInput: React.FC<SmileyInputProps> = ({
     },
     [cursorPosition, setValue, value, keepOpened]
   );
+  /** Maintain cursor position when input value changes  */
   useEffect(() => {
     if (inputRef.current) {
+
       inputRef.current.setSelectionRange(cursorPosition || 0, cursorPosition || 0);
     }
   }, [cursorPosition, value]);
+ 
+  
+  
   return (
     <div className="relative flex min-h-[60px] items-center w-full">
       {" "}
