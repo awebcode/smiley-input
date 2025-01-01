@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
@@ -58,104 +58,90 @@ const EmojiPicker: React.FC<{
   </DropdownMenu.Root>
 );
 
-/**
- * SmileyInput component
- */
-export const SmileyInput: React.FC<SmileyInputProps> = React.memo(
-  ({
-    value = "",
-    setValue,
-    keepOpened = true,
-    className,
-    pickerOptions,
-    emojiButtonElement = "😄", // Default emoji element
-    emojiButtonClassName = "border-none focus:border-none focus:ring-0 focus:ring-offset-0",
-    ...props
-  }: SmileyInputProps) => {
-    const inputRef = useRef<HTMLTextAreaElement | null>(null);
-    const [open, setOpen] = useState(false);
-    const [cursorPosition, setCursorPosition] = useState<number | null>(null);
-
-    // Memoize the textarea className to avoid unnecessary recalculations
-    const textAreaClassName = useMemo(() => {
-      return `resize-none flex w-full rounded-lg border border-violet-300 ring-1 ring-offset-2 ring-violet-300 hover:ring-violet-400 focus:ring-violet-500 focus:outline-none bg-transparent px-4 py-3 text-base text-gray-800 placeholder:text-gray-400 shadow-sm transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`;
-    }, [className]);
-
-    // Handle input change and update cursor position
-    const handleInputChange = useCallback(
-      (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const newValue = e.target.value;
-        setValue(newValue);
-        setCursorPosition(e.target.selectionStart || null); // Save current cursor position
-
-        if (!keepOpened) {
-          setOpen(false); // Close picker if keepOpened is false
+export const SmileyInput: React.FC<SmileyInputProps> = ({
+  value = "",
+  setValue,
+  keepOpened = true,
+  className,
+  pickerOptions,
+  emojiButtonElement = "😄",
+  emojiButtonClassName = "border-none focus:border-none focus:ring-0 focus:ring-offset-0",
+  ...props
+}) => {
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const [open, setOpen] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState<number | null>(null);
+  const textAreaClassName = useMemo(
+    () =>
+      `resize-none flex w-full rounded-lg border border-violet-300 ring-1 ring-offset-2 ring-violet-300 hover:ring-violet-400 focus:ring-violet-500 focus:outline-none bg-transparent px-4 py-3 text-base text-gray-800 placeholder:text-gray-400 shadow-sm transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`,
+    [className]
+  );
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const newValue = e.target.value;
+      setValue(newValue);
+      setCursorPosition(e.target.selectionStart || null);
+      if (!keepOpened) {
+        setOpen(false);
+      }
+    },
+    [setValue, keepOpened]
+  );
+  const handleEmojiClick = useCallback(
+    (emojiData: { emoji: string } | { native: string }) => {
+      const emoji = "emoji" in emojiData ? emojiData.emoji : emojiData.native;
+      const position = cursorPosition ?? value.length;
+      const textBeforeCursor = value.substring(0, position);
+      const textAfterCursor = value.substring(position);
+      const newValue = textBeforeCursor + emoji + textAfterCursor;
+      setValue(newValue);
+      requestAnimationFrame(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+          const newCursorPosition = position + emoji.length;
+          inputRef.current.setSelectionRange(newCursorPosition, newCursorPosition);
+          setCursorPosition(newCursorPosition);
         }
-      },
-      [setValue, keepOpened]
-    );
-
-    // Handle emoji click and update input value
-    const handleEmojiClick = useCallback(
-      (emojiData: { emoji: string } | { native: string }) => {
-        const emoji = "emoji" in emojiData ? emojiData.emoji : emojiData.native;
-        const position = cursorPosition ?? value.length; // Use saved cursor position or append to end
-
-        const textBeforeCursor = value.substring(0, position);
-        const textAfterCursor = value.substring(position);
-        const newValue = textBeforeCursor + emoji + textAfterCursor;
-
-        setValue(newValue);
-
-        // Restore focus and update cursor position
-        setTimeout(() => {
+      });
+      if (!keepOpened) {
+        setOpen(false);
+      }
+    },
+    [cursorPosition, setValue, value, keepOpened]
+  );
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.setSelectionRange(cursorPosition || 0, cursorPosition || 0);
+    }
+  }, [cursorPosition, value]);
+  return (
+    <div className="relative flex min-h-[60px] items-center w-full">
+      {" "}
+      <textarea
+        value={value}
+        onChange={handleInputChange}
+        onClick={() => {
           if (inputRef.current) {
-            inputRef.current.focus();
-            const newCursorPosition = position + emoji.length;
-            inputRef.current.setSelectionRange(newCursorPosition, newCursorPosition);
-            setCursorPosition(newCursorPosition); // Update saved cursor position
+            setCursorPosition(inputRef.current.selectionStart);
           }
-        }, 0);
-
-        if (!keepOpened) {
-          setOpen(false); // Close picker after emoji selection if keepOpened is false
-        }
-      },
-      [cursorPosition, setValue, value, keepOpened]
-    );
-
-    return  (
-        <div className="relative flex min-h-[60px] items-center w-full">
-          <textarea
-            value={value}
-            onChange={handleInputChange}
-            onClick={() => {
-              if (inputRef.current) {
-                setCursorPosition(inputRef.current.selectionStart); // Update cursor position on click
-              }
-            }}
-            ref={inputRef}
-            className={textAreaClassName}
-            rows={3}
-            placeholder="Write your thoughts here..."
-            {...props}
-          />
-
-          <EmojiButton
-            emojiButtonElement={emojiButtonElement}
-            emojiButtonClassName={emojiButtonClassName}
-            onClick={() => setOpen((prevOpen) => !prevOpen)}
-          />
-
-          <EmojiPicker
-            open={open}
-            onOpenChange={setOpen}
-            onEmojiSelect={handleEmojiClick}
-            pickerOptions={pickerOptions}
-          />
-        </div>
-      
-    
-    );
-  }
-);
+        }}
+        ref={inputRef}
+        className={textAreaClassName}
+        rows={3}
+        placeholder="Write your thoughts here..."
+        {...props}
+      />{" "}
+      <EmojiButton
+        emojiButtonElement={emojiButtonElement}
+        emojiButtonClassName={emojiButtonClassName}
+        onClick={() => setOpen((prevOpen) => !prevOpen)}
+      />{" "}
+      <EmojiPicker
+        open={open}
+        onOpenChange={setOpen}
+        onEmojiSelect={handleEmojiClick}
+        pickerOptions={pickerOptions}
+      />{" "}
+    </div>
+  );
+};
