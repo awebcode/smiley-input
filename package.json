@@ -1,6 +1,6 @@
 {
   "name": "smiley-input",
-  "version": "2.0.15",
+  "version": "2.0.17",
   "description": "A simple and customizable emoji input component for React, Typescript and Tailwind CSS.",
   "author": "awebcode",
   "license": "MIT",

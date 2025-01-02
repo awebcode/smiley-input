@@ -73,7 +73,7 @@ export const SmileyInput: React.FC<SmileyInputProps> = ({
   const [cursorPosition, setCursorPosition] = useState<number | null>(null);
   const textAreaClassName = useMemo(
     () =>
-      `resize-none flex w-full rounded-lg border border-violet-300 ring-1 ring-offset-2 ring-violet-300 hover:ring-violet-400 focus:ring-violet-500 focus:outline-none bg-transparent px-4 py-3 text-base text-gray-800 placeholder:text-gray-400 shadow-sm transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`,
+      `resize-none flex w-full rounded-lg border border-violet-300 ring-1 ring-offset-2 ring-violet-300 hover:ring-violet-400 focus:ring-violet-500 focus:outline-none bg-transparent px-2 py-1 text-base text-gray-800 placeholder:text-gray-400 shadow-sm transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`,
     [className]
   );
   const handleInputChange = useCallback(
