@@ -27,7 +27,7 @@ const EmojiButton: React.FC<{
 }> = ({ emojiButtonElement, emojiButtonClassName, onClick }) => (
   <button
     onClick={onClick}
-    className={`absolute bottom-2 right-2 h-8 w-8 text-lg ${emojiButtonClassName}`}
+    className={`absolute bottom-0 right-2 h-8 w-8 text-lg ${emojiButtonClassName}`}
   >
     {emojiButtonElement}
   </button>
@@ -47,7 +47,7 @@ const EmojiPicker: React.FC<{
       <div />
     </DropdownMenu.Trigger>
     <DropdownMenu.Portal>
-      <DropdownMenu.Content sideOffset={15} align="end" side="top">
+      <DropdownMenu.Content sideOffset={15} align="end" >
         <Picker
           data={data}
           onEmojiSelect={onEmojiSelect}
@@ -65,7 +65,7 @@ export const SmileyInput: React.FC<SmileyInputProps> = ({
   className,
   pickerOptions,
   emojiButtonElement = "😄",
-  emojiButtonClassName = "border-none focus:border-none focus:ring-0 focus:ring-offset-0",
+  emojiButtonClassName = "border-none  focus:border-none focus:ring-0 focus:ring-offset-0",
   ...props
 }) => {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -73,7 +73,7 @@ export const SmileyInput: React.FC<SmileyInputProps> = ({
   const [cursorPosition, setCursorPosition] = useState<number | null>(null);
   const textAreaClassName = useMemo(
     () =>
-      `resize-none flex w-full rounded-lg border border-violet-300 ring-1 ring-offset-2 ring-violet-300 hover:ring-violet-400 focus:ring-violet-500 focus:outline-none bg-transparent px-2 py-1 text-base text-gray-800 placeholder:text-gray-400 shadow-sm transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`,
+      ` flex w-full rounded-lg border border-violet-300 ring-1 ring-offset-2 ring-violet-300 hover:ring-violet-400 focus:ring-violet-500 focus:outline-none bg-transparent px-2 py-1 text-base text-gray-800 placeholder:text-gray-400 shadow-sm transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`,
     [className]
   );
   const handleInputChange = useCallback(
