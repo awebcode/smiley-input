@@ -27,7 +27,7 @@ const EmojiButton: React.FC<{
 }> = ({ emojiButtonElement, emojiButtonClassName, onClick }) => (
   <button
     onClick={onClick}
-    className={`absolute bottom-0 right-2 h-8 w-8 text-lg ${emojiButtonClassName}`}
+    className={` h-8 w-8 text-lg ${emojiButtonClassName}`}
   >
     {emojiButtonElement}
   </button>
@@ -41,13 +41,15 @@ const EmojiPicker: React.FC<{
   onOpenChange: (open: boolean) => void;
   onEmojiSelect: (emojiData: { emoji: string } | { native: string }) => void;
   pickerOptions?: object;
-}> = ({ open, onOpenChange, onEmojiSelect, pickerOptions }) => (
+  side?: "top" | "bottom"| "left" | "right";
+  sideOffset?: number;
+}> = ({ open, onOpenChange, onEmojiSelect, pickerOptions, side="bottom",sideOffset=14 }) => (
   <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
     <DropdownMenu.Trigger asChild>
       <div />
     </DropdownMenu.Trigger>
     <DropdownMenu.Portal>
-      <DropdownMenu.Content sideOffset={15} align="end" >
+      <DropdownMenu.Content  sideOffset={sideOffset} side={side} align="end" >
         <Picker
           data={data}
           onEmojiSelect={onEmojiSelect}
@@ -136,17 +138,19 @@ export const SmileyInput: React.FC<SmileyInputProps> = ({
         placeholder="Write your thoughts here..."
         {...props}
       />{" "}
-      <EmojiButton
-        emojiButtonElement={emojiButtonElement}
-        emojiButtonClassName={emojiButtonClassName}
-        onClick={() => setOpen((prevOpen) => !prevOpen)}
-      />{" "}
-      <EmojiPicker
-        open={open}
-        onOpenChange={setOpen}
-        onEmojiSelect={handleEmojiClick}
-        pickerOptions={pickerOptions}
-      />{" "}
+      <div className="absolute bottom-0 right-1">
+        <EmojiButton
+          emojiButtonElement={emojiButtonElement}
+          emojiButtonClassName={emojiButtonClassName}
+          onClick={() => setOpen((prevOpen) => !prevOpen)}
+        />{" "}
+        <EmojiPicker
+          open={open}
+          onOpenChange={setOpen}
+          onEmojiSelect={handleEmojiClick}
+          pickerOptions={pickerOptions}
+        />{" "}
+      </div>
     </div>
   );
 };
