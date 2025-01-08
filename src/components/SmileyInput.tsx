@@ -26,6 +26,7 @@ const EmojiButton: React.FC<{
   onClick: () => void;
 }> = ({ emojiButtonElement, emojiButtonClassName, onClick }) => (
   <button
+    type="button"
     onClick={onClick}
     className={` h-8 w-8 text-lg ${emojiButtonClassName}`}
   >
@@ -43,7 +44,7 @@ const EmojiPicker: React.FC<{
   pickerOptions?: object;
   side?: "top" | "bottom"| "left" | "right";
   sideOffset?: number;
-}> = ({ open, onOpenChange, onEmojiSelect, pickerOptions, side="bottom",sideOffset=14 }) => (
+}> = ({ open, onOpenChange, onEmojiSelect, pickerOptions, side="bottom",sideOffset=26 }) => (
   <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
     <DropdownMenu.Trigger asChild>
       <div />

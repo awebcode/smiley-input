@@ -30,8 +30,8 @@ const App = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       {/* Smiley Input Section */}
-      <div className="bg-white shadow-lg rounded-lg p-6 max-w-xl w-full">
-        <h1 className="text-lg font-bold mb-4 text-center text-violet-500">
+      <div className="bg-white shadow-lg rounded-lg p-8 mt-56 max-w-xl w-full">
+        <h1 className="text-xl font-bold mb-4 text-center text-violet-500">
           Smiley-Input - Fully Customizable React Component
         </h1>
         <p className="mb-6 text-center text-gray-600">
